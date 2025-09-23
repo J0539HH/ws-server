@@ -10,7 +10,13 @@ server.on("connection", (socket) => {
 
   socket.on("message", (msg) => {
     console.log("Mensaje recibido:", msg.toString());
-    socket.send(`Eco: ${msg}`);
+
+    // Reenviar (broadcast) a todos los clientes conectados
+    server.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(msg.toString());
+      }
+    });
   });
 
   socket.on("close", () => console.log("Cliente desconectado"));
