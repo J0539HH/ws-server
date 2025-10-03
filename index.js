@@ -73,8 +73,10 @@ console.log(`✅ Servidor WebSocket escuchando en puerto ${PORT}`);
 function enviarNotificacion(idempresario, perfil, mensaje, data) {
   clientes.forEach((info, clientSocket) => {
     if (clientSocket.readyState === WebSocket.OPEN) {
-      // Filtrar por empresario y perfil
-      if (info.idempresario === idempresario && info.perfil === perfil) {
+      if (
+        String(info.idempresario) === String(idempresario) &&
+        info.perfil === perfil
+      ) {
         clientSocket.send(
           JSON.stringify({
             tipo: "notificacion",
