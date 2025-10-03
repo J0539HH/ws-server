@@ -52,7 +52,7 @@ server.on("connection", (socket, req) => {
 
     // Ejemplo: recibir notificación y enviarla solo a los que correspondan
     if (data.type === "notificacion") {
-      enviarNotificacion(data.idempresario, data.perfil, data.mensaje);
+      enviarNotificacion(data.idempresario, data.perfil, data.mensaje, data.data);
     }
   });
 
@@ -65,7 +65,7 @@ server.on("connection", (socket, req) => {
 console.log(`✅ Servidor WebSocket escuchando en puerto ${PORT}`);
 
 // Función para enviar notificaciones filtradas
-function enviarNotificacion(idempresario, perfil, mensaje) {
+function enviarNotificacion(idempresario, perfil, mensaje, data) {
   clientes.forEach((info, clientSocket) => {
     if (clientSocket.readyState === WebSocket.OPEN) {
       // Filtrar por empresario y perfil
@@ -76,6 +76,7 @@ function enviarNotificacion(idempresario, perfil, mensaje) {
             mensaje,
             idempresario,
             perfil,
+            data,
           })
         );
       }
