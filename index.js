@@ -51,8 +51,13 @@ server.on("connection", (socket, req) => {
     }
 
     // Ejemplo: recibir notificación y enviarla solo a los que correspondan
-    if (data.type === "notificacion") {
-      enviarNotificacion(data.idempresario, data.perfil, data.mensaje, data.data);
+    if (data.tipo === "notificacion") {
+      enviarNotificacion(
+        data.idempresario,
+        data.perfil,
+        data.mensaje,
+        data.data
+      );
     }
   });
 
@@ -72,7 +77,7 @@ function enviarNotificacion(idempresario, perfil, mensaje, data) {
       if (info.idempresario === idempresario && info.perfil === perfil) {
         clientSocket.send(
           JSON.stringify({
-            type: "notificacion",
+            tipo: "notificacion",
             mensaje,
             idempresario,
             perfil,
