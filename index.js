@@ -34,7 +34,7 @@ server.on("connection", (socket, req) => {
   // Enviar bienvenida
   socket.send(
     JSON.stringify({
-      type: "welcome",
+      type: "Conectado a las notificaciones automáticas",
       message: `Conectado como perfil: ${perfil}, empresario: ${idempresario}`,
     })
   );
@@ -56,7 +56,8 @@ server.on("connection", (socket, req) => {
         data.idempresario,
         data.perfil,
         data.mensaje,
-        data.data
+        data.data,
+        data.redireccion || null
       );
     }
   });
@@ -70,7 +71,7 @@ server.on("connection", (socket, req) => {
 console.log(`✅ Servidor WebSocket escuchando en puerto ${PORT}`);
 
 // Función para enviar notificaciones filtradas
-function enviarNotificacion(idempresario, perfil, mensaje, data) {
+function enviarNotificacion(idempresario, perfil, mensaje, data, redireccion) {
   clientes.forEach((info, clientSocket) => {
     if (clientSocket.readyState === WebSocket.OPEN) {
       if (
@@ -84,6 +85,7 @@ function enviarNotificacion(idempresario, perfil, mensaje, data) {
             idempresario,
             perfil,
             data,
+            redireccion,
           })
         );
       }
