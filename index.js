@@ -16,9 +16,10 @@ server.on("connection", (socket, req) => {
   const token = url.searchParams.get("token");
   const perfil = url.searchParams.get("perfil");
   const idempresario = url.searchParams.get("idempresario");
+  const usuario = url.searchParams.get("usuario") || "Sistema central";
 
   console.log(
-    `🔗 Cliente conectado: token=${token}, perfil=${perfil}, idempresario=${idempresario}`
+    `🔗 Cliente conectado: token=${token}, perfil=${perfil}, idempresario=${idempresario}, usuario=${usuario}`
   );
 
   // Validar token
@@ -35,7 +36,7 @@ server.on("connection", (socket, req) => {
   socket.send(
     JSON.stringify({
       type: "Conectado a las notificaciones automáticas",
-      message: `Conectado como perfil: ${perfil}, empresario: ${idempresario}`,
+      message: `Conectado como perfil: ${perfil}, empresario: ${idempresario} y usuario: ${usuario}`,
     })
   );
 
